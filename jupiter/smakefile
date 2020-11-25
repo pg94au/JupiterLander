@@ -1,0 +1,23 @@
+.SUFFIXES : .o .c
+
+.c.o:
+   $(CC) $(CFLAGS) $*.c
+
+
+PROJECT = jupiter
+
+STARTUP = LIB:c.o
+
+MACHINE = 68000
+
+CFLAGS = CPU=$(MACHINE)
+
+LIBS = LIB:amiga.lib LIB:sc.lib LIB:scm.lib
+
+OBJS = jupitermain.o jupiterintro.o jupitergame.o jl_gamestuff.o\
+ jl_images.o jl_gels.o jl_draw.o jl_keyboard.o jl_audio.o jl_sounds.o\
+ jl_memory.o
+
+
+$(PROJECT): $(OBJS) jupiterdefs.h
+   slink FROM $(STARTUP) $(OBJS) TO $@ LIB $(LIBS)
